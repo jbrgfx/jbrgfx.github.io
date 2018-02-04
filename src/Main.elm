@@ -138,7 +138,7 @@ theAppDesc =
             , Font.color black
             , Font.size 18
             ]
-            [ Element.text " earch for stylish-elephants experimental project by jbrgfx on github." ]
+            [ Element.text " earch for stylish-elephants experimental projects by jbrgfx on github." ]
         ]
 
 
