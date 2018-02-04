@@ -19522,7 +19522,7 @@ var _jbrgfx$elm_filtered_list$Main$overViewDesc = A2(
 				},
 				{
 					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element$text(' simple Elm module that filters a list using text input.  The module has an initial state to demonstrate to the end-user how the text box works and end-user feedback to guide the user in the use use of the module.'),
+					_0: _mdgriffith$stylish_elephants$Element$text(' simple Elm module that filters a list using text input.  The module has an initial state to demonstrate to the end-user how the text box works and end-user feedback to guide the user in the use of the module.'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
@@ -19698,9 +19698,17 @@ var _jbrgfx$elm_filtered_list$Main$initialModel = {
 	filtered: {
 		ctor: '::',
 		_0: 'elm-filtered-list',
-		_1: {ctor: '[]'}
+		_1: {
+			ctor: '::',
+			_0: 'elm-style-elements-experiments',
+			_1: {
+				ctor: '::',
+				_0: 'responsive-stylish-elephants',
+				_1: {ctor: '[]'}
+			}
+		}
 	},
-	filterTerm: 'list'
+	filterTerm: 'el'
 };
 var _jbrgfx$elm_filtered_list$Main$Model = F3(
 	function (a, b, c) {
