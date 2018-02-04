@@ -19593,7 +19593,7 @@ var _jbrgfx$elm_filtered_list$Main$theAppDesc = A2(
 				},
 				{
 					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element$text(' earch for stylish-elephants experimental project by jbrgfx on github.'),
+					_0: _mdgriffith$stylish_elephants$Element$text(' earch for stylish-elephants experimental projects by jbrgfx on github.'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
