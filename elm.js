@@ -19690,8 +19690,12 @@ var _jbrgfx$elm_filtered_list$Main$initialModel = {
 			_0: 'elm-style-elements-experiments',
 			_1: {
 				ctor: '::',
-				_0: 'responsive-stylish-elephants',
-				_1: {ctor: '[]'}
+				_0: 'responsive-filtered-list',
+				_1: {
+					ctor: '::',
+					_0: 'responsive-stylish-elephants',
+					_1: {ctor: '[]'}
+				}
 			}
 		}
 	},
