@@ -23,8 +23,8 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-    { people = [ "elm-filtered-list", "elm-style-elements-experiments", "responsive-filtered-list", "responsive-stylish-elephants" ]
-    , filtered = [ "elm-filtered-list", "elm-style-elements-experiments", "responsive-stylish-elephants" ]
+    { people = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
+    , filtered = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-stylish-elephants" ]
     , filterTerm = "el"
     }
 
