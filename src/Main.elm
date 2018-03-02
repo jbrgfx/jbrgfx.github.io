@@ -240,23 +240,13 @@ footerArea =
         , paddingTop 20
         ]
         [ newTabLink
-            [ padding gutter
-            , Font.bold
+            [ Font.bold
             , Font.size 18
             , Font.underline
             , alignBottom
             ]
-            { url = "http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/4.0.0"
-            , label = Element.text "stylish-elephants 4.0.0: package docs"
-            }
-        , newTabLink
-            [ Font.bold
-            , Font.underline
-            , Font.size 18
-            , centerY
-            ]
-            { url = "https://github.com/jbrgfx"
-            , label = Element.text "jbrgfx's github repos"
+            { url = "http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/latest/"
+            , label = Element.text "stylish-elephants latest: package docs"
             }
         ]
 

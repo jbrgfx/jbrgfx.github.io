@@ -19302,56 +19302,26 @@ var _jbrgfx$elm_filtered_list$Main$footerArea = A2(
 			_mdgriffith$stylish_elephants$Element$newTabLink,
 			{
 				ctor: '::',
-				_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$elm_filtered_list$Main$gutter),
+				_0: _mdgriffith$stylish_elephants$Element_Font$bold,
 				_1: {
 					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element_Font$bold,
-					_1: {
-						ctor: '::',
-						_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
-						_1: {
-							ctor: '::',
-							_0: _mdgriffith$stylish_elephants$Element_Font$underline,
-							_1: {
-								ctor: '::',
-								_0: _mdgriffith$stylish_elephants$Element$alignBottom,
-								_1: {ctor: '[]'}
-							}
-						}
-					}
-				}
-			},
-			{
-				url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/4.0.0',
-				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants 4.0.0: package docs')
-			}),
-		_1: {
-			ctor: '::',
-			_0: A2(
-				_mdgriffith$stylish_elephants$Element$newTabLink,
-				{
-					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element_Font$bold,
+					_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
 					_1: {
 						ctor: '::',
 						_0: _mdgriffith$stylish_elephants$Element_Font$underline,
 						_1: {
 							ctor: '::',
-							_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
-							_1: {
-								ctor: '::',
-								_0: _mdgriffith$stylish_elephants$Element$centerY,
-								_1: {ctor: '[]'}
-							}
+							_0: _mdgriffith$stylish_elephants$Element$alignBottom,
+							_1: {ctor: '[]'}
 						}
 					}
-				},
-				{
-					url: 'https://github.com/jbrgfx',
-					label: _mdgriffith$stylish_elephants$Element$text('jbrgfx\'s github repos')
-				}),
-			_1: {ctor: '[]'}
-		}
+				}
+			},
+			{
+				url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/latest/',
+				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants latest: package docs')
+			}),
+		_1: {ctor: '[]'}
 	});
 var _jbrgfx$elm_filtered_list$Main$mainColumns = function (_p0) {
 	var _p1 = _p0;
