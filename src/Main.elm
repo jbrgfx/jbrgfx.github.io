@@ -67,10 +67,6 @@ view model =
             [ headerArea
             , mainColumns
                 { left =
-                    [ theAppDesc
-                    , overViewDesc
-                    ]
-                , right =
                     [ row [ padding gutter ] [ inputForm ]
                     , validateFilter model
                     , paragraph
@@ -82,6 +78,10 @@ view model =
                         , Font.size 16
                         ]
                         (List.map viewPeople model.filtered)
+                    ]
+                , right =
+                    [ theAppDesc
+                    , overViewDesc
                     ]
                 }
             , footerArea
@@ -176,8 +176,7 @@ viewPeople entry =
             , Font.underline
             , alignBottom
             , Font.color darkBlue
-            , Background.mouseOverColor Color.darkBlue
-            , Font.mouseOverColor Color.white
+            , Element.mouseOver [ Font.color Color.white, Background.color Color.darkBlue ]
             ]
             { url = "https://github.com/jbrgfx/" ++ entry
             , label = Element.text entry
@@ -220,14 +219,6 @@ inputForm =
         [ Border.color Color.black
         ]
         { label = Input.labelLeft [] (text "Filter:")
-        , notice =
-            Just
-                (Input.warningBelow
-                    [ Font.color Color.darkBlue
-                    , Font.size 16
-                    ]
-                    (text "Filter is case-sensitive and no filter returns all items.")
-                )
         , onChange = Just Filter
         , placeholder = Nothing
         , text = initialModel.filterTerm
