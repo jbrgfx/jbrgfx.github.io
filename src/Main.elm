@@ -82,6 +82,7 @@ view model =
                 , right =
                     [ theAppDesc
                     , overViewDesc
+                    , githubSearchQuery
                     ]
                 }
             , footerArea
@@ -114,6 +115,23 @@ elmlogo =
             ]
             { description = "the Elm Language logo"
             , src = "elm_logo.png"
+            }
+        ]
+
+
+githubSearchQuery =
+    row
+        [ Font.color darkBlue
+        , paddingTop 20
+        ]
+        [ newTabLink
+            [ Font.bold
+            , Font.size 18
+            , Font.underline
+            , alignBottom
+            ]
+            { url = "https://github.com/search?l=&q=mdgriffith%2Fstylish-elephants+extension%3Ajson+path%3A%2F&ref=advsearch&type=Code&utf8=%E2%9C%93"
+            , label = Element.text "All github projects using stylish-elephants"
             }
         ]
 

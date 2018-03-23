@@ -20860,6 +20860,44 @@ var _jbrgfx$elm_filtered_list$Main$theAppDesc = A2(
 			_1: {ctor: '[]'}
 		}
 	});
+var _jbrgfx$elm_filtered_list$Main$githubSearchQuery = A2(
+	_mdgriffith$stylish_elephants$Element$row,
+	{
+		ctor: '::',
+		_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
+		_1: {
+			ctor: '::',
+			_0: _jbrgfx$elm_filtered_list$Main$paddingTop(20),
+			_1: {ctor: '[]'}
+		}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_mdgriffith$stylish_elephants$Element$newTabLink,
+			{
+				ctor: '::',
+				_0: _mdgriffith$stylish_elephants$Element_Font$bold,
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$stylish_elephants$Element_Font$underline,
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$stylish_elephants$Element$alignBottom,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{
+				url: 'https://github.com/search?l=&q=mdgriffith%2Fstylish-elephants+extension%3Ajson+path%3A%2F&ref=advsearch&type=Code&utf8=%E2%9C%93',
+				label: _mdgriffith$stylish_elephants$Element$text('All github projects using stylish-elephants')
+			}),
+		_1: {ctor: '[]'}
+	});
 var _jbrgfx$elm_filtered_list$Main$elmlogo = A2(
 	_mdgriffith$stylish_elephants$Element$row,
 	{ctor: '[]'},
@@ -21102,7 +21140,11 @@ var _jbrgfx$elm_filtered_list$Main$view = function (model) {
 								_1: {
 									ctor: '::',
 									_0: _jbrgfx$elm_filtered_list$Main$overViewDesc,
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: _jbrgfx$elm_filtered_list$Main$githubSearchQuery,
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}),
