@@ -23,9 +23,9 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-    { people = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
-    , filtered = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-stylish-elephants" ]
-    , filterTerm = "el"
+    { people = [ "elm-filtered-list", "elm-logo", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
+    , filtered = [ "elm-filtered-list", "elm-logo", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-stylish-elephants" ]
+    , filterTerm = "e"
     }
 
 
