@@ -7,10 +7,30 @@
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 
-<url>
-  <loc>https://jbrgfx.github.io/</loc>
-  <lastmod>2018-02-12T16:15:25+00:00</lastmod>
-</url>
+  <url>
+    <loc>https://jbrgfx.github.io/</loc>
+    <lastmod>2018-04-12T16:05:46+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://jbrgfx.github.io/elm-filtered-list/</loc>
+    <lastmod>2018-04-12T16:05:46+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://jbrgfx.github.io/elm-style-elements-experiments/</loc>
+    <lastmod>2018-04-12T16:05:46+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://jbrgfx.github.io/github-stylish-elephants-search/</loc>
+    <lastmod>2018-04-12T16:05:46+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://jbrgfx.github.io/esponsive-filtered-list/</loc>
+    <lastmod>2018-04-12T16:05:46+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://jbrgfx.github.io/responsive-stylish-elephants/</loc>
+    <lastmod>2018-04-12T16:05:46+00:00</lastmod>
+  </url>
 
 
 </urlset>
