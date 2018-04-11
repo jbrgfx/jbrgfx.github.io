@@ -23,8 +23,8 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-    { people = [ "elm-filtered-list", "elm-logo", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
-    , filtered = [ "elm-filtered-list", "elm-logo", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-stylish-elephants" ]
+    { people = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
+    , filtered = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
     , filterTerm = "e"
     }
 
@@ -97,12 +97,15 @@ headerArea =
         , Border.color darkBlue
         ]
         [ elmlogo
-        , Element.el
-            [ centerY
+        , newTabLink
+            [ Font.bold
             , Font.size 40
-            , Font.bold
+            , Font.underline
+            , alignBottom
             ]
-            (Element.text "stylish-elephants experiments")
+            { url = "https://github.com/jbrgfx"
+            , label = Element.text "jbrgfx github projects"
+            }
         ]
 
 
@@ -156,7 +159,7 @@ theAppDesc =
             , Font.color black
             , Font.size 18
             ]
-            [ Element.text " earch for stylish-elephants experimental projects by jbrgfx on github." ]
+            [ Element.text " earch for stylish-elephants demos on jbrgfx.github.io." ]
         ]
 
 
@@ -196,7 +199,7 @@ viewPeople entry =
             , Font.color darkBlue
             , Element.mouseOver [ Font.color Color.white, Background.color Color.darkBlue ]
             ]
-            { url = "https://github.com/jbrgfx/" ++ entry
+            { url = "https://jbrgfx.github.io/" ++ entry
             , label = Element.text entry
             }
         ]

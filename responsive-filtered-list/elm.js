@@ -3912,6 +3912,203 @@ var _elm_lang$core$Result$fromMaybe = F2(
 		}
 	});
 
+var _elm_lang$core$Task$onError = _elm_lang$core$Native_Scheduler.onError;
+var _elm_lang$core$Task$andThen = _elm_lang$core$Native_Scheduler.andThen;
+var _elm_lang$core$Task$spawnCmd = F2(
+	function (router, _p0) {
+		var _p1 = _p0;
+		return _elm_lang$core$Native_Scheduler.spawn(
+			A2(
+				_elm_lang$core$Task$andThen,
+				_elm_lang$core$Platform$sendToApp(router),
+				_p1._0));
+	});
+var _elm_lang$core$Task$fail = _elm_lang$core$Native_Scheduler.fail;
+var _elm_lang$core$Task$mapError = F2(
+	function (convert, task) {
+		return A2(
+			_elm_lang$core$Task$onError,
+			function (_p2) {
+				return _elm_lang$core$Task$fail(
+					convert(_p2));
+			},
+			task);
+	});
+var _elm_lang$core$Task$succeed = _elm_lang$core$Native_Scheduler.succeed;
+var _elm_lang$core$Task$map = F2(
+	function (func, taskA) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return _elm_lang$core$Task$succeed(
+					func(a));
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map2 = F3(
+	function (func, taskA, taskB) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return _elm_lang$core$Task$succeed(
+							A2(func, a, b));
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map3 = F4(
+	function (func, taskA, taskB, taskC) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return _elm_lang$core$Task$succeed(
+									A3(func, a, b, c));
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map4 = F5(
+	function (func, taskA, taskB, taskC, taskD) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return A2(
+									_elm_lang$core$Task$andThen,
+									function (d) {
+										return _elm_lang$core$Task$succeed(
+											A4(func, a, b, c, d));
+									},
+									taskD);
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map5 = F6(
+	function (func, taskA, taskB, taskC, taskD, taskE) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return A2(
+									_elm_lang$core$Task$andThen,
+									function (d) {
+										return A2(
+											_elm_lang$core$Task$andThen,
+											function (e) {
+												return _elm_lang$core$Task$succeed(
+													A5(func, a, b, c, d, e));
+											},
+											taskE);
+									},
+									taskD);
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$sequence = function (tasks) {
+	var _p3 = tasks;
+	if (_p3.ctor === '[]') {
+		return _elm_lang$core$Task$succeed(
+			{ctor: '[]'});
+	} else {
+		return A3(
+			_elm_lang$core$Task$map2,
+			F2(
+				function (x, y) {
+					return {ctor: '::', _0: x, _1: y};
+				}),
+			_p3._0,
+			_elm_lang$core$Task$sequence(_p3._1));
+	}
+};
+var _elm_lang$core$Task$onEffects = F3(
+	function (router, commands, state) {
+		return A2(
+			_elm_lang$core$Task$map,
+			function (_p4) {
+				return {ctor: '_Tuple0'};
+			},
+			_elm_lang$core$Task$sequence(
+				A2(
+					_elm_lang$core$List$map,
+					_elm_lang$core$Task$spawnCmd(router),
+					commands)));
+	});
+var _elm_lang$core$Task$init = _elm_lang$core$Task$succeed(
+	{ctor: '_Tuple0'});
+var _elm_lang$core$Task$onSelfMsg = F3(
+	function (_p7, _p6, _p5) {
+		return _elm_lang$core$Task$succeed(
+			{ctor: '_Tuple0'});
+	});
+var _elm_lang$core$Task$command = _elm_lang$core$Native_Platform.leaf('Task');
+var _elm_lang$core$Task$Perform = function (a) {
+	return {ctor: 'Perform', _0: a};
+};
+var _elm_lang$core$Task$perform = F2(
+	function (toMessage, task) {
+		return _elm_lang$core$Task$command(
+			_elm_lang$core$Task$Perform(
+				A2(_elm_lang$core$Task$map, toMessage, task)));
+	});
+var _elm_lang$core$Task$attempt = F2(
+	function (resultToMessage, task) {
+		return _elm_lang$core$Task$command(
+			_elm_lang$core$Task$Perform(
+				A2(
+					_elm_lang$core$Task$onError,
+					function (_p8) {
+						return _elm_lang$core$Task$succeed(
+							resultToMessage(
+								_elm_lang$core$Result$Err(_p8)));
+					},
+					A2(
+						_elm_lang$core$Task$andThen,
+						function (_p9) {
+							return _elm_lang$core$Task$succeed(
+								resultToMessage(
+									_elm_lang$core$Result$Ok(_p9)));
+						},
+						task))));
+	});
+var _elm_lang$core$Task$cmdMap = F2(
+	function (tagger, _p10) {
+		var _p11 = _p10;
+		return _elm_lang$core$Task$Perform(
+			A2(_elm_lang$core$Task$map, tagger, _p11._0));
+	});
+_elm_lang$core$Native_Platform.effectManagers['Task'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Task$init, onEffects: _elm_lang$core$Task$onEffects, onSelfMsg: _elm_lang$core$Task$onSelfMsg, tag: 'cmd', cmdMap: _elm_lang$core$Task$cmdMap};
+
 //import Native.Utils //
 
 var _elm_lang$core$Native_Debug = function() {
@@ -5243,6 +5440,221 @@ var _elm_lang$core$Dict$diff = F2(
 			t2);
 	});
 
+//import Native.Scheduler //
+
+var _elm_lang$core$Native_Time = function() {
+
+var now = _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
+{
+	callback(_elm_lang$core$Native_Scheduler.succeed(Date.now()));
+});
+
+function setInterval_(interval, task)
+{
+	return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
+	{
+		var id = setInterval(function() {
+			_elm_lang$core$Native_Scheduler.rawSpawn(task);
+		}, interval);
+
+		return function() { clearInterval(id); };
+	});
+}
+
+return {
+	now: now,
+	setInterval_: F2(setInterval_)
+};
+
+}();
+var _elm_lang$core$Time$setInterval = _elm_lang$core$Native_Time.setInterval_;
+var _elm_lang$core$Time$spawnHelp = F3(
+	function (router, intervals, processes) {
+		var _p0 = intervals;
+		if (_p0.ctor === '[]') {
+			return _elm_lang$core$Task$succeed(processes);
+		} else {
+			var _p1 = _p0._0;
+			var spawnRest = function (id) {
+				return A3(
+					_elm_lang$core$Time$spawnHelp,
+					router,
+					_p0._1,
+					A3(_elm_lang$core$Dict$insert, _p1, id, processes));
+			};
+			var spawnTimer = _elm_lang$core$Native_Scheduler.spawn(
+				A2(
+					_elm_lang$core$Time$setInterval,
+					_p1,
+					A2(_elm_lang$core$Platform$sendToSelf, router, _p1)));
+			return A2(_elm_lang$core$Task$andThen, spawnRest, spawnTimer);
+		}
+	});
+var _elm_lang$core$Time$addMySub = F2(
+	function (_p2, state) {
+		var _p3 = _p2;
+		var _p6 = _p3._1;
+		var _p5 = _p3._0;
+		var _p4 = A2(_elm_lang$core$Dict$get, _p5, state);
+		if (_p4.ctor === 'Nothing') {
+			return A3(
+				_elm_lang$core$Dict$insert,
+				_p5,
+				{
+					ctor: '::',
+					_0: _p6,
+					_1: {ctor: '[]'}
+				},
+				state);
+		} else {
+			return A3(
+				_elm_lang$core$Dict$insert,
+				_p5,
+				{ctor: '::', _0: _p6, _1: _p4._0},
+				state);
+		}
+	});
+var _elm_lang$core$Time$inMilliseconds = function (t) {
+	return t;
+};
+var _elm_lang$core$Time$millisecond = 1;
+var _elm_lang$core$Time$second = 1000 * _elm_lang$core$Time$millisecond;
+var _elm_lang$core$Time$minute = 60 * _elm_lang$core$Time$second;
+var _elm_lang$core$Time$hour = 60 * _elm_lang$core$Time$minute;
+var _elm_lang$core$Time$inHours = function (t) {
+	return t / _elm_lang$core$Time$hour;
+};
+var _elm_lang$core$Time$inMinutes = function (t) {
+	return t / _elm_lang$core$Time$minute;
+};
+var _elm_lang$core$Time$inSeconds = function (t) {
+	return t / _elm_lang$core$Time$second;
+};
+var _elm_lang$core$Time$now = _elm_lang$core$Native_Time.now;
+var _elm_lang$core$Time$onSelfMsg = F3(
+	function (router, interval, state) {
+		var _p7 = A2(_elm_lang$core$Dict$get, interval, state.taggers);
+		if (_p7.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var tellTaggers = function (time) {
+				return _elm_lang$core$Task$sequence(
+					A2(
+						_elm_lang$core$List$map,
+						function (tagger) {
+							return A2(
+								_elm_lang$core$Platform$sendToApp,
+								router,
+								tagger(time));
+						},
+						_p7._0));
+			};
+			return A2(
+				_elm_lang$core$Task$andThen,
+				function (_p8) {
+					return _elm_lang$core$Task$succeed(state);
+				},
+				A2(_elm_lang$core$Task$andThen, tellTaggers, _elm_lang$core$Time$now));
+		}
+	});
+var _elm_lang$core$Time$subscription = _elm_lang$core$Native_Platform.leaf('Time');
+var _elm_lang$core$Time$State = F2(
+	function (a, b) {
+		return {taggers: a, processes: b};
+	});
+var _elm_lang$core$Time$init = _elm_lang$core$Task$succeed(
+	A2(_elm_lang$core$Time$State, _elm_lang$core$Dict$empty, _elm_lang$core$Dict$empty));
+var _elm_lang$core$Time$onEffects = F3(
+	function (router, subs, _p9) {
+		var _p10 = _p9;
+		var rightStep = F3(
+			function (_p12, id, _p11) {
+				var _p13 = _p11;
+				return {
+					ctor: '_Tuple3',
+					_0: _p13._0,
+					_1: _p13._1,
+					_2: A2(
+						_elm_lang$core$Task$andThen,
+						function (_p14) {
+							return _p13._2;
+						},
+						_elm_lang$core$Native_Scheduler.kill(id))
+				};
+			});
+		var bothStep = F4(
+			function (interval, taggers, id, _p15) {
+				var _p16 = _p15;
+				return {
+					ctor: '_Tuple3',
+					_0: _p16._0,
+					_1: A3(_elm_lang$core$Dict$insert, interval, id, _p16._1),
+					_2: _p16._2
+				};
+			});
+		var leftStep = F3(
+			function (interval, taggers, _p17) {
+				var _p18 = _p17;
+				return {
+					ctor: '_Tuple3',
+					_0: {ctor: '::', _0: interval, _1: _p18._0},
+					_1: _p18._1,
+					_2: _p18._2
+				};
+			});
+		var newTaggers = A3(_elm_lang$core$List$foldl, _elm_lang$core$Time$addMySub, _elm_lang$core$Dict$empty, subs);
+		var _p19 = A6(
+			_elm_lang$core$Dict$merge,
+			leftStep,
+			bothStep,
+			rightStep,
+			newTaggers,
+			_p10.processes,
+			{
+				ctor: '_Tuple3',
+				_0: {ctor: '[]'},
+				_1: _elm_lang$core$Dict$empty,
+				_2: _elm_lang$core$Task$succeed(
+					{ctor: '_Tuple0'})
+			});
+		var spawnList = _p19._0;
+		var existingDict = _p19._1;
+		var killTask = _p19._2;
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (newProcesses) {
+				return _elm_lang$core$Task$succeed(
+					A2(_elm_lang$core$Time$State, newTaggers, newProcesses));
+			},
+			A2(
+				_elm_lang$core$Task$andThen,
+				function (_p20) {
+					return A3(_elm_lang$core$Time$spawnHelp, router, spawnList, existingDict);
+				},
+				killTask));
+	});
+var _elm_lang$core$Time$Every = F2(
+	function (a, b) {
+		return {ctor: 'Every', _0: a, _1: b};
+	});
+var _elm_lang$core$Time$every = F2(
+	function (interval, tagger) {
+		return _elm_lang$core$Time$subscription(
+			A2(_elm_lang$core$Time$Every, interval, tagger));
+	});
+var _elm_lang$core$Time$subMap = F2(
+	function (f, _p21) {
+		var _p22 = _p21;
+		return A2(
+			_elm_lang$core$Time$Every,
+			_p22._0,
+			function (_p23) {
+				return f(
+					_p22._1(_p23));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Time'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Time$init, onEffects: _elm_lang$core$Time$onEffects, onSelfMsg: _elm_lang$core$Time$onSelfMsg, tag: 'sub', subMap: _elm_lang$core$Time$subMap};
+
 var _elm_lang$core$Debug$crash = _elm_lang$core$Native_Debug.crash;
 var _elm_lang$core$Debug$log = _elm_lang$core$Native_Debug.log;
 
@@ -6016,6 +6428,10 @@ return {
 
 }();
 
+var _elm_lang$core$Process$kill = _elm_lang$core$Native_Scheduler.kill;
+var _elm_lang$core$Process$sleep = _elm_lang$core$Native_Scheduler.sleep;
+var _elm_lang$core$Process$spawn = _elm_lang$core$Native_Scheduler.spawn;
+
 var _elm_lang$core$Tuple$mapSecond = F2(
 	function (func, _p0) {
 		var _p1 = _p0;
@@ -6190,6 +6606,192 @@ var _elm_lang$core$Set$partition = F2(
 			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
 		};
 	});
+
+var _elm_lang$dom$Native_Dom = function() {
+
+var fakeNode = {
+	addEventListener: function() {},
+	removeEventListener: function() {}
+};
+
+var onDocument = on(typeof document !== 'undefined' ? document : fakeNode);
+var onWindow = on(typeof window !== 'undefined' ? window : fakeNode);
+
+function on(node)
+{
+	return function(eventName, decoder, toTask)
+	{
+		return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback) {
+
+			function performTask(event)
+			{
+				var result = A2(_elm_lang$core$Json_Decode$decodeValue, decoder, event);
+				if (result.ctor === 'Ok')
+				{
+					_elm_lang$core$Native_Scheduler.rawSpawn(toTask(result._0));
+				}
+			}
+
+			node.addEventListener(eventName, performTask);
+
+			return function()
+			{
+				node.removeEventListener(eventName, performTask);
+			};
+		});
+	};
+}
+
+var rAF = typeof requestAnimationFrame !== 'undefined'
+	? requestAnimationFrame
+	: function(callback) { callback(); };
+
+function withNode(id, doStuff)
+{
+	return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
+	{
+		rAF(function()
+		{
+			var node = document.getElementById(id);
+			if (node === null)
+			{
+				callback(_elm_lang$core$Native_Scheduler.fail({ ctor: 'NotFound', _0: id }));
+				return;
+			}
+			callback(_elm_lang$core$Native_Scheduler.succeed(doStuff(node)));
+		});
+	});
+}
+
+
+// FOCUS
+
+function focus(id)
+{
+	return withNode(id, function(node) {
+		node.focus();
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+function blur(id)
+{
+	return withNode(id, function(node) {
+		node.blur();
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+
+// SCROLLING
+
+function getScrollTop(id)
+{
+	return withNode(id, function(node) {
+		return node.scrollTop;
+	});
+}
+
+function setScrollTop(id, desiredScrollTop)
+{
+	return withNode(id, function(node) {
+		node.scrollTop = desiredScrollTop;
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+function toBottom(id)
+{
+	return withNode(id, function(node) {
+		node.scrollTop = node.scrollHeight;
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+function getScrollLeft(id)
+{
+	return withNode(id, function(node) {
+		return node.scrollLeft;
+	});
+}
+
+function setScrollLeft(id, desiredScrollLeft)
+{
+	return withNode(id, function(node) {
+		node.scrollLeft = desiredScrollLeft;
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+function toRight(id)
+{
+	return withNode(id, function(node) {
+		node.scrollLeft = node.scrollWidth;
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+
+// SIZE
+
+function width(options, id)
+{
+	return withNode(id, function(node) {
+		switch (options.ctor)
+		{
+			case 'Content':
+				return node.scrollWidth;
+			case 'VisibleContent':
+				return node.clientWidth;
+			case 'VisibleContentWithBorders':
+				return node.offsetWidth;
+			case 'VisibleContentWithBordersAndMargins':
+				var rect = node.getBoundingClientRect();
+				return rect.right - rect.left;
+		}
+	});
+}
+
+function height(options, id)
+{
+	return withNode(id, function(node) {
+		switch (options.ctor)
+		{
+			case 'Content':
+				return node.scrollHeight;
+			case 'VisibleContent':
+				return node.clientHeight;
+			case 'VisibleContentWithBorders':
+				return node.offsetHeight;
+			case 'VisibleContentWithBordersAndMargins':
+				var rect = node.getBoundingClientRect();
+				return rect.bottom - rect.top;
+		}
+	});
+}
+
+return {
+	onDocument: F3(onDocument),
+	onWindow: F3(onWindow),
+
+	focus: focus,
+	blur: blur,
+
+	getScrollTop: getScrollTop,
+	setScrollTop: F2(setScrollTop),
+	getScrollLeft: getScrollLeft,
+	setScrollLeft: F2(setScrollLeft),
+	toBottom: toBottom,
+	toRight: toRight,
+
+	height: F2(height),
+	width: F2(width)
+};
+
+}();
+
+var _elm_lang$dom$Dom_LowLevel$onWindow = _elm_lang$dom$Native_Dom.onWindow;
+var _elm_lang$dom$Dom_LowLevel$onDocument = _elm_lang$dom$Native_Dom.onDocument;
 
 var _elm_lang$virtual_dom$VirtualDom_Debug$wrap;
 var _elm_lang$virtual_dom$VirtualDom_Debug$wrapWithFlags;
@@ -8692,6 +9294,223 @@ var _elm_lang$html$Html_Events$onClick = function (msg) {
 var _elm_lang$html$Html_Events$Options = F2(
 	function (a, b) {
 		return {stopPropagation: a, preventDefault: b};
+	});
+
+var _elm_lang$window$Native_Window = function()
+{
+
+var size = _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)	{
+	callback(_elm_lang$core$Native_Scheduler.succeed({
+		width: window.innerWidth,
+		height: window.innerHeight
+	}));
+});
+
+return {
+	size: size
+};
+
+}();
+var _elm_lang$window$Window_ops = _elm_lang$window$Window_ops || {};
+_elm_lang$window$Window_ops['&>'] = F2(
+	function (task1, task2) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (_p0) {
+				return task2;
+			},
+			task1);
+	});
+var _elm_lang$window$Window$onSelfMsg = F3(
+	function (router, dimensions, state) {
+		var _p1 = state;
+		if (_p1.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var send = function (_p2) {
+				var _p3 = _p2;
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					_p3._0(dimensions));
+			};
+			return A2(
+				_elm_lang$window$Window_ops['&>'],
+				_elm_lang$core$Task$sequence(
+					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
+				_elm_lang$core$Task$succeed(state));
+		}
+	});
+var _elm_lang$window$Window$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+var _elm_lang$window$Window$size = _elm_lang$window$Native_Window.size;
+var _elm_lang$window$Window$width = A2(
+	_elm_lang$core$Task$map,
+	function (_) {
+		return _.width;
+	},
+	_elm_lang$window$Window$size);
+var _elm_lang$window$Window$height = A2(
+	_elm_lang$core$Task$map,
+	function (_) {
+		return _.height;
+	},
+	_elm_lang$window$Window$size);
+var _elm_lang$window$Window$onEffects = F3(
+	function (router, newSubs, oldState) {
+		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
+		if (_p4._0.ctor === 'Nothing') {
+			if (_p4._1.ctor === '[]') {
+				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+			} else {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (pid) {
+						return _elm_lang$core$Task$succeed(
+							_elm_lang$core$Maybe$Just(
+								{subs: newSubs, pid: pid}));
+					},
+					_elm_lang$core$Process$spawn(
+						A3(
+							_elm_lang$dom$Dom_LowLevel$onWindow,
+							'resize',
+							_elm_lang$core$Json_Decode$succeed(
+								{ctor: '_Tuple0'}),
+							function (_p5) {
+								return A2(
+									_elm_lang$core$Task$andThen,
+									_elm_lang$core$Platform$sendToSelf(router),
+									_elm_lang$window$Window$size);
+							})));
+			}
+		} else {
+			if (_p4._1.ctor === '[]') {
+				return A2(
+					_elm_lang$window$Window_ops['&>'],
+					_elm_lang$core$Process$kill(_p4._0._0.pid),
+					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
+			} else {
+				return _elm_lang$core$Task$succeed(
+					_elm_lang$core$Maybe$Just(
+						{subs: newSubs, pid: _p4._0._0.pid}));
+			}
+		}
+	});
+var _elm_lang$window$Window$subscription = _elm_lang$core$Native_Platform.leaf('Window');
+var _elm_lang$window$Window$Size = F2(
+	function (a, b) {
+		return {width: a, height: b};
+	});
+var _elm_lang$window$Window$MySub = function (a) {
+	return {ctor: 'MySub', _0: a};
+};
+var _elm_lang$window$Window$resizes = function (tagger) {
+	return _elm_lang$window$Window$subscription(
+		_elm_lang$window$Window$MySub(tagger));
+};
+var _elm_lang$window$Window$subMap = F2(
+	function (func, _p6) {
+		var _p7 = _p6;
+		return _elm_lang$window$Window$MySub(
+			function (_p8) {
+				return func(
+					_p7._0(_p8));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
+
+var _jbrgfx$responsive_filtered_list$Model$Model = F4(
+	function (a, b, c, d) {
+		return {screenSize: a, githubProjects: b, filtered: c, filterTerm: d};
+	});
+var _jbrgfx$responsive_filtered_list$Model$Desktop = {ctor: 'Desktop'};
+var _jbrgfx$responsive_filtered_list$Model$Tablet = {ctor: 'Tablet'};
+var _jbrgfx$responsive_filtered_list$Model$Phone = {ctor: 'Phone'};
+var _jbrgfx$responsive_filtered_list$Model$Filter = function (a) {
+	return {ctor: 'Filter', _0: a};
+};
+var _jbrgfx$responsive_filtered_list$Model$SetScreenSize = function (a) {
+	return {ctor: 'SetScreenSize', _0: a};
+};
+var _jbrgfx$responsive_filtered_list$Model$NoOp = {ctor: 'NoOp'};
+
+var _jbrgfx$responsive_filtered_list$Initialize$init = A2(
+	_elm_lang$core$Platform_Cmd_ops['!'],
+	{
+		screenSize: _jbrgfx$responsive_filtered_list$Model$Desktop,
+		githubProjects: {
+			ctor: '::',
+			_0: 'elm-filtered-list',
+			_1: {
+				ctor: '::',
+				_0: 'elm-style-elements-experiments',
+				_1: {
+					ctor: '::',
+					_0: 'responsive-stylish-elephants',
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		filtered: {
+			ctor: '::',
+			_0: 'elm-filtered-list',
+			_1: {
+				ctor: '::',
+				_0: 'elm-style-elements-experiments',
+				_1: {
+					ctor: '::',
+					_0: 'responsive-stylish-elephants',
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		filterTerm: 'el'
+	},
+	{ctor: '[]'});
+
+var _jbrgfx$responsive_filtered_list$Subscriptions$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _elm_lang$window$Window$resizes(_jbrgfx$responsive_filtered_list$Model$SetScreenSize),
+			_1: {ctor: '[]'}
+		});
+};
+
+var _jbrgfx$responsive_filtered_list$Update$getScreenSize = function (size) {
+	return (_elm_lang$core$Native_Utils.cmp(size.width, 700) < 1) ? _jbrgfx$responsive_filtered_list$Model$Phone : ((_elm_lang$core$Native_Utils.cmp(size.width, 800) < 1) ? _jbrgfx$responsive_filtered_list$Model$Tablet : _jbrgfx$responsive_filtered_list$Model$Desktop);
+};
+var _jbrgfx$responsive_filtered_list$Update$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'NoOp':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{ctor: '[]'});
+			case 'SetScreenSize':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							screenSize: _jbrgfx$responsive_filtered_list$Update$getScreenSize(_p0._0)
+						}),
+					{ctor: '[]'});
+			default:
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							filtered: A2(
+								_elm_lang$core$List$filter,
+								_elm_lang$core$String$contains(model.filterTerm),
+								model.githubProjects),
+							filterTerm: _p0._0
+						}),
+					{ctor: '[]'});
+		}
 	});
 
 var _mdgriffith$stylish_elephants$Internal_Style$class = function (cls) {
@@ -17802,6 +18621,110 @@ var _mdgriffith$stylish_elephants$Element_Border$color = function (clr) {
 			clr));
 };
 
+var _mdgriffith$stylish_elephants$Element_Font$glow = F2(
+	function (color, size) {
+		return _mdgriffith$stylish_elephants$Internal_Model$TextShadow(
+			{
+				offset: {ctor: '_Tuple2', _0: 0, _1: 0},
+				blur: size * 2,
+				color: color
+			});
+	});
+var _mdgriffith$stylish_elephants$Element_Font$shadow = function (_p0) {
+	var _p1 = _p0;
+	return _mdgriffith$stylish_elephants$Internal_Model$TextShadow(
+		{offset: _p1.offset, blur: _p1.blur, color: _p1.color});
+};
+var _mdgriffith$stylish_elephants$Element_Font$unitalicized = _mdgriffith$stylish_elephants$Internal_Model$class('text-unitalicized');
+var _mdgriffith$stylish_elephants$Element_Font$heavy = _mdgriffith$stylish_elephants$Internal_Model$class('text-heavy');
+var _mdgriffith$stylish_elephants$Element_Font$extraBold = _mdgriffith$stylish_elephants$Internal_Model$class('text-extra-bold');
+var _mdgriffith$stylish_elephants$Element_Font$medium = _mdgriffith$stylish_elephants$Internal_Model$class('text-medium');
+var _mdgriffith$stylish_elephants$Element_Font$semiBold = _mdgriffith$stylish_elephants$Internal_Model$class('text-semi-bold');
+var _mdgriffith$stylish_elephants$Element_Font$regular = _mdgriffith$stylish_elephants$Internal_Model$class('text-normal-weight');
+var _mdgriffith$stylish_elephants$Element_Font$extraLight = _mdgriffith$stylish_elephants$Internal_Model$class('text-extra-light');
+var _mdgriffith$stylish_elephants$Element_Font$hairline = _mdgriffith$stylish_elephants$Internal_Model$class('text-thin');
+var _mdgriffith$stylish_elephants$Element_Font$light = _mdgriffith$stylish_elephants$Internal_Model$class('text-light');
+var _mdgriffith$stylish_elephants$Element_Font$bold = _mdgriffith$stylish_elephants$Internal_Model$class('bold');
+var _mdgriffith$stylish_elephants$Element_Font$italic = _mdgriffith$stylish_elephants$Internal_Model$class('italic');
+var _mdgriffith$stylish_elephants$Element_Font$strike = _mdgriffith$stylish_elephants$Internal_Model$class('strike');
+var _mdgriffith$stylish_elephants$Element_Font$underline = _mdgriffith$stylish_elephants$Internal_Model$class('underline');
+var _mdgriffith$stylish_elephants$Element_Font$justify = _mdgriffith$stylish_elephants$Internal_Model$class('text-justify');
+var _mdgriffith$stylish_elephants$Element_Font$center = _mdgriffith$stylish_elephants$Internal_Model$class('text-center');
+var _mdgriffith$stylish_elephants$Element_Font$alignRight = _mdgriffith$stylish_elephants$Internal_Model$class('text-right');
+var _mdgriffith$stylish_elephants$Element_Font$alignLeft = _mdgriffith$stylish_elephants$Internal_Model$class('text-left');
+var _mdgriffith$stylish_elephants$Element_Font$wordSpacing = function (offset) {
+	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
+		A3(
+			_mdgriffith$stylish_elephants$Internal_Model$Single,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'word-spacing-',
+				_mdgriffith$stylish_elephants$Internal_Model$floatClass(offset)),
+			'word-spacing',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(offset),
+				'px')));
+};
+var _mdgriffith$stylish_elephants$Element_Font$letterSpacing = function (offset) {
+	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
+		A3(
+			_mdgriffith$stylish_elephants$Internal_Model$Single,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'letter-spacing-',
+				_mdgriffith$stylish_elephants$Internal_Model$floatClass(offset)),
+			'letter-spacing',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(offset),
+				'px')));
+};
+var _mdgriffith$stylish_elephants$Element_Font$lineHeight = function (_p2) {
+	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
+		_mdgriffith$stylish_elephants$Internal_Model$LineHeight(_p2));
+};
+var _mdgriffith$stylish_elephants$Element_Font$size = function (size) {
+	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
+		A3(
+			_mdgriffith$stylish_elephants$Internal_Model$Single,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'font-size-',
+				_elm_lang$core$Basics$toString(size)),
+			'font-size',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(size),
+				'px')));
+};
+var _mdgriffith$stylish_elephants$Element_Font$external = function (_p3) {
+	var _p4 = _p3;
+	return A2(_mdgriffith$stylish_elephants$Internal_Model$ImportFont, _p4.name, _p4.url);
+};
+var _mdgriffith$stylish_elephants$Element_Font$typeface = _mdgriffith$stylish_elephants$Internal_Model$Typeface;
+var _mdgriffith$stylish_elephants$Element_Font$monospace = _mdgriffith$stylish_elephants$Internal_Model$Monospace;
+var _mdgriffith$stylish_elephants$Element_Font$sansSerif = _mdgriffith$stylish_elephants$Internal_Model$SansSerif;
+var _mdgriffith$stylish_elephants$Element_Font$serif = _mdgriffith$stylish_elephants$Internal_Model$Serif;
+var _mdgriffith$stylish_elephants$Element_Font$family = function (families) {
+	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
+		A2(
+			_mdgriffith$stylish_elephants$Internal_Model$FontFamily,
+			A3(_elm_lang$core$List$foldl, _mdgriffith$stylish_elephants$Internal_Model$renderFontClassName, 'font-', families),
+			families));
+};
+var _mdgriffith$stylish_elephants$Element_Font$color = function (fontColor) {
+	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
+		A3(
+			_mdgriffith$stylish_elephants$Internal_Model$Colored,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'font-color-',
+				_mdgriffith$stylish_elephants$Internal_Model$formatColorClass(fontColor)),
+			'color',
+			fontColor));
+};
+
 var _mdgriffith$stylish_elephants$Element_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
 var _mdgriffith$stylish_elephants$Element_Events$targetChecked = A2(
 	_elm_lang$core$Json_Decode$at,
@@ -17935,110 +18858,6 @@ var _mdgriffith$stylish_elephants$Element_Events$Options = F2(
 	function (a, b) {
 		return {stopPropagation: a, preventDefault: b};
 	});
-
-var _mdgriffith$stylish_elephants$Element_Font$glow = F2(
-	function (color, size) {
-		return _mdgriffith$stylish_elephants$Internal_Model$TextShadow(
-			{
-				offset: {ctor: '_Tuple2', _0: 0, _1: 0},
-				blur: size * 2,
-				color: color
-			});
-	});
-var _mdgriffith$stylish_elephants$Element_Font$shadow = function (_p0) {
-	var _p1 = _p0;
-	return _mdgriffith$stylish_elephants$Internal_Model$TextShadow(
-		{offset: _p1.offset, blur: _p1.blur, color: _p1.color});
-};
-var _mdgriffith$stylish_elephants$Element_Font$unitalicized = _mdgriffith$stylish_elephants$Internal_Model$class('text-unitalicized');
-var _mdgriffith$stylish_elephants$Element_Font$heavy = _mdgriffith$stylish_elephants$Internal_Model$class('text-heavy');
-var _mdgriffith$stylish_elephants$Element_Font$extraBold = _mdgriffith$stylish_elephants$Internal_Model$class('text-extra-bold');
-var _mdgriffith$stylish_elephants$Element_Font$medium = _mdgriffith$stylish_elephants$Internal_Model$class('text-medium');
-var _mdgriffith$stylish_elephants$Element_Font$semiBold = _mdgriffith$stylish_elephants$Internal_Model$class('text-semi-bold');
-var _mdgriffith$stylish_elephants$Element_Font$regular = _mdgriffith$stylish_elephants$Internal_Model$class('text-normal-weight');
-var _mdgriffith$stylish_elephants$Element_Font$extraLight = _mdgriffith$stylish_elephants$Internal_Model$class('text-extra-light');
-var _mdgriffith$stylish_elephants$Element_Font$hairline = _mdgriffith$stylish_elephants$Internal_Model$class('text-thin');
-var _mdgriffith$stylish_elephants$Element_Font$light = _mdgriffith$stylish_elephants$Internal_Model$class('text-light');
-var _mdgriffith$stylish_elephants$Element_Font$bold = _mdgriffith$stylish_elephants$Internal_Model$class('bold');
-var _mdgriffith$stylish_elephants$Element_Font$italic = _mdgriffith$stylish_elephants$Internal_Model$class('italic');
-var _mdgriffith$stylish_elephants$Element_Font$strike = _mdgriffith$stylish_elephants$Internal_Model$class('strike');
-var _mdgriffith$stylish_elephants$Element_Font$underline = _mdgriffith$stylish_elephants$Internal_Model$class('underline');
-var _mdgriffith$stylish_elephants$Element_Font$justify = _mdgriffith$stylish_elephants$Internal_Model$class('text-justify');
-var _mdgriffith$stylish_elephants$Element_Font$center = _mdgriffith$stylish_elephants$Internal_Model$class('text-center');
-var _mdgriffith$stylish_elephants$Element_Font$alignRight = _mdgriffith$stylish_elephants$Internal_Model$class('text-right');
-var _mdgriffith$stylish_elephants$Element_Font$alignLeft = _mdgriffith$stylish_elephants$Internal_Model$class('text-left');
-var _mdgriffith$stylish_elephants$Element_Font$wordSpacing = function (offset) {
-	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
-		A3(
-			_mdgriffith$stylish_elephants$Internal_Model$Single,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'word-spacing-',
-				_mdgriffith$stylish_elephants$Internal_Model$floatClass(offset)),
-			'word-spacing',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_elm_lang$core$Basics$toString(offset),
-				'px')));
-};
-var _mdgriffith$stylish_elephants$Element_Font$letterSpacing = function (offset) {
-	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
-		A3(
-			_mdgriffith$stylish_elephants$Internal_Model$Single,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'letter-spacing-',
-				_mdgriffith$stylish_elephants$Internal_Model$floatClass(offset)),
-			'letter-spacing',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_elm_lang$core$Basics$toString(offset),
-				'px')));
-};
-var _mdgriffith$stylish_elephants$Element_Font$lineHeight = function (_p2) {
-	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
-		_mdgriffith$stylish_elephants$Internal_Model$LineHeight(_p2));
-};
-var _mdgriffith$stylish_elephants$Element_Font$size = function (size) {
-	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
-		A3(
-			_mdgriffith$stylish_elephants$Internal_Model$Single,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'font-size-',
-				_elm_lang$core$Basics$toString(size)),
-			'font-size',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_elm_lang$core$Basics$toString(size),
-				'px')));
-};
-var _mdgriffith$stylish_elephants$Element_Font$external = function (_p3) {
-	var _p4 = _p3;
-	return A2(_mdgriffith$stylish_elephants$Internal_Model$ImportFont, _p4.name, _p4.url);
-};
-var _mdgriffith$stylish_elephants$Element_Font$typeface = _mdgriffith$stylish_elephants$Internal_Model$Typeface;
-var _mdgriffith$stylish_elephants$Element_Font$monospace = _mdgriffith$stylish_elephants$Internal_Model$Monospace;
-var _mdgriffith$stylish_elephants$Element_Font$sansSerif = _mdgriffith$stylish_elephants$Internal_Model$SansSerif;
-var _mdgriffith$stylish_elephants$Element_Font$serif = _mdgriffith$stylish_elephants$Internal_Model$Serif;
-var _mdgriffith$stylish_elephants$Element_Font$family = function (families) {
-	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
-		A2(
-			_mdgriffith$stylish_elephants$Internal_Model$FontFamily,
-			A3(_elm_lang$core$List$foldl, _mdgriffith$stylish_elephants$Internal_Model$renderFontClassName, 'font-', families),
-			families));
-};
-var _mdgriffith$stylish_elephants$Element_Font$color = function (fontColor) {
-	return _mdgriffith$stylish_elephants$Internal_Model$StyleClass(
-		A3(
-			_mdgriffith$stylish_elephants$Internal_Model$Colored,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'font-color-',
-				_mdgriffith$stylish_elephants$Internal_Model$formatColorClass(fontColor)),
-			'color',
-			fontColor));
-};
 
 var _mdgriffith$stylish_elephants$Element_Region$description = function (_p0) {
 	return _mdgriffith$stylish_elephants$Internal_Model$Describe(
@@ -20546,41 +21365,37 @@ var _mdgriffith$stylish_elephants$Element_Input$radio = _mdgriffith$stylish_elep
 var _mdgriffith$stylish_elephants$Element_Input$Row = {ctor: 'Row'};
 var _mdgriffith$stylish_elephants$Element_Input$radioRow = _mdgriffith$stylish_elephants$Element_Input$radioHelper(_mdgriffith$stylish_elephants$Element_Input$Row);
 
-var _jbrgfx$elm_filtered_list$Main$paddingLeft = function (n) {
+var _jbrgfx$responsive_filtered_list$View$paddingLeft = function (n) {
 	return _mdgriffith$stylish_elephants$Element$paddingEach(
 		{right: 0, left: n, top: 0, bottom: 0});
 };
-var _jbrgfx$elm_filtered_list$Main$paddingBottom = function (n) {
+var _jbrgfx$responsive_filtered_list$View$paddingBottom = function (n) {
 	return _mdgriffith$stylish_elephants$Element$paddingEach(
 		{bottom: n, top: 0, left: 0, right: 0});
 };
-var _jbrgfx$elm_filtered_list$Main$paddingTop = function (n) {
+var _jbrgfx$responsive_filtered_list$View$paddingTop = function (n) {
 	return _mdgriffith$stylish_elephants$Element$paddingEach(
 		{bottom: 0, top: n, left: 0, right: 0});
 };
-var _jbrgfx$elm_filtered_list$Main$paddingRight = function (n) {
+var _jbrgfx$responsive_filtered_list$View$paddingRight = function (n) {
 	return _mdgriffith$stylish_elephants$Element$paddingEach(
 		{right: n, left: 0, top: 0, bottom: 0});
 };
-var _jbrgfx$elm_filtered_list$Main$borderBottom = function (n) {
+var _jbrgfx$responsive_filtered_list$View$borderBottom = function (n) {
 	return _mdgriffith$stylish_elephants$Element_Border$widthEach(
 		{right: 0, left: 0, top: 0, bottom: n});
 };
-var _jbrgfx$elm_filtered_list$Main$borderRight = function (n) {
+var _jbrgfx$responsive_filtered_list$View$borderRight = function (n) {
 	return _mdgriffith$stylish_elephants$Element_Border$widthEach(
 		{right: n, left: 0, top: 0, bottom: 0});
 };
-var _jbrgfx$elm_filtered_list$Main$gutter = 20;
-var _jbrgfx$elm_filtered_list$Main$footerArea = A2(
-	_mdgriffith$stylish_elephants$Element$row,
+var _jbrgfx$responsive_filtered_list$View$gutter = 20;
+var _jbrgfx$responsive_filtered_list$View$footerArea = A2(
+	_mdgriffith$stylish_elephants$Element$paragraph,
 	{
 		ctor: '::',
 		_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
-		_1: {
-			ctor: '::',
-			_0: _jbrgfx$elm_filtered_list$Main$paddingTop(20),
-			_1: {ctor: '[]'}
-		}
+		_1: {ctor: '[]'}
 	},
 	{
 		ctor: '::',
@@ -20588,34 +21403,80 @@ var _jbrgfx$elm_filtered_list$Main$footerArea = A2(
 			_mdgriffith$stylish_elephants$Element$newTabLink,
 			{
 				ctor: '::',
-				_0: _mdgriffith$stylish_elephants$Element_Font$bold,
+				_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
 				_1: {
 					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
+					_0: _mdgriffith$stylish_elephants$Element_Font$bold,
 					_1: {
 						ctor: '::',
-						_0: _mdgriffith$stylish_elephants$Element_Font$underline,
+						_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
 						_1: {
 							ctor: '::',
-							_0: _mdgriffith$stylish_elephants$Element$alignBottom,
-							_1: {ctor: '[]'}
+							_0: _mdgriffith$stylish_elephants$Element_Font$underline,
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$stylish_elephants$Element$alignBottom,
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
 			},
 			{
-				url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/latest/',
-				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants latest: package docs')
+				url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/4.0.0',
+				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants 4.0.0: package docs')
 			}),
-		_1: {ctor: '[]'}
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_mdgriffith$stylish_elephants$Element$newTabLink,
+				{
+					ctor: '::',
+					_0: _mdgriffith$stylish_elephants$Element_Font$bold,
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$stylish_elephants$Element_Font$underline,
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
+							_1: {
+								ctor: '::',
+								_0: _jbrgfx$responsive_filtered_list$View$paddingLeft(20),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				{
+					url: 'https://github.com/jbrgfx',
+					label: _mdgriffith$stylish_elephants$Element$text('jbrgfx\'s github repos')
+				}),
+			_1: {ctor: '[]'}
+		}
 	});
-var _jbrgfx$elm_filtered_list$Main$mainColumns = function (_p0) {
+var _jbrgfx$responsive_filtered_list$View$inputForm = A2(
+	_mdgriffith$stylish_elephants$Element_Input$text,
+	{
+		ctor: '::',
+		_0: _mdgriffith$stylish_elephants$Element_Border$color(_elm_lang$core$Color$black),
+		_1: {ctor: '[]'}
+	},
+	{
+		label: A2(
+			_mdgriffith$stylish_elephants$Element_Input$labelLeft,
+			{ctor: '[]'},
+			_mdgriffith$stylish_elephants$Element$text('Filter:')),
+		onChange: _elm_lang$core$Maybe$Just(_jbrgfx$responsive_filtered_list$Model$Filter),
+		placeholder: _elm_lang$core$Maybe$Nothing,
+		text: 'el'
+	});
+var _jbrgfx$responsive_filtered_list$View$mainColumns = function (_p0) {
 	var _p1 = _p0;
 	return A2(
 		_mdgriffith$stylish_elephants$Element$row,
 		{
 			ctor: '::',
-			_0: _jbrgfx$elm_filtered_list$Main$borderBottom(1),
+			_0: _jbrgfx$responsive_filtered_list$View$borderBottom(1),
 			_1: {
 				ctor: '::',
 				_0: _mdgriffith$stylish_elephants$Element_Border$color(_elm_lang$core$Color$darkBlue),
@@ -20628,13 +21489,13 @@ var _jbrgfx$elm_filtered_list$Main$mainColumns = function (_p0) {
 				_mdgriffith$stylish_elephants$Element$column,
 				{
 					ctor: '::',
-					_0: _jbrgfx$elm_filtered_list$Main$borderRight(1),
+					_0: _jbrgfx$responsive_filtered_list$View$borderRight(1),
 					_1: {
 						ctor: '::',
 						_0: _mdgriffith$stylish_elephants$Element_Border$color(_elm_lang$core$Color$darkBlue),
 						_1: {
 							ctor: '::',
-							_0: _jbrgfx$elm_filtered_list$Main$paddingRight(_jbrgfx$elm_filtered_list$Main$gutter),
+							_0: _jbrgfx$responsive_filtered_list$View$paddingRight(_jbrgfx$responsive_filtered_list$View$gutter),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -20646,7 +21507,7 @@ var _jbrgfx$elm_filtered_list$Main$mainColumns = function (_p0) {
 					_mdgriffith$stylish_elephants$Element$column,
 					{
 						ctor: '::',
-						_0: _jbrgfx$elm_filtered_list$Main$paddingLeft(_jbrgfx$elm_filtered_list$Main$gutter),
+						_0: _jbrgfx$responsive_filtered_list$View$paddingLeft(_jbrgfx$responsive_filtered_list$View$gutter),
 						_1: {ctor: '[]'}
 					},
 					_p1.right),
@@ -20654,7 +21515,7 @@ var _jbrgfx$elm_filtered_list$Main$mainColumns = function (_p0) {
 			}
 		});
 };
-var _jbrgfx$elm_filtered_list$Main$validateFilter = function (model) {
+var _jbrgfx$responsive_filtered_list$View$validateFilter = function (model) {
 	var message = _elm_lang$core$Native_Utils.eq(model.filterTerm, '') ? '❌ No filter. Try adding one!' : '✅ Filter is set.';
 	return A2(
 		_mdgriffith$stylish_elephants$Element$row,
@@ -20665,7 +21526,7 @@ var _jbrgfx$elm_filtered_list$Main$validateFilter = function (model) {
 			_1: {ctor: '[]'}
 		});
 };
-var _jbrgfx$elm_filtered_list$Main$viewPeople = function (entry) {
+var _jbrgfx$responsive_filtered_list$View$viewGithubProjects = function (entry) {
 	return A2(
 		_mdgriffith$stylish_elephants$Element$paragraph,
 		{ctor: '[]'},
@@ -20675,7 +21536,7 @@ var _jbrgfx$elm_filtered_list$Main$viewPeople = function (entry) {
 				_mdgriffith$stylish_elephants$Element$newTabLink,
 				{
 					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$elm_filtered_list$Main$gutter),
+					_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
 					_1: {
 						ctor: '::',
 						_0: _mdgriffith$stylish_elephants$Element_Font$bold,
@@ -20712,17 +21573,17 @@ var _jbrgfx$elm_filtered_list$Main$viewPeople = function (entry) {
 					}
 				},
 				{
-					url: A2(_elm_lang$core$Basics_ops['++'], 'https://jbrgfx.github.io/', entry),
+					url: A2(_elm_lang$core$Basics_ops['++'], 'https://github.com/jbrgfx/', entry),
 					label: _mdgriffith$stylish_elephants$Element$text(entry)
 				}),
 			_1: {ctor: '[]'}
 		});
 };
-var _jbrgfx$elm_filtered_list$Main$overViewDesc = A2(
+var _jbrgfx$responsive_filtered_list$View$overViewDesc = A2(
 	_mdgriffith$stylish_elephants$Element$paragraph,
 	{
 		ctor: '::',
-		_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$elm_filtered_list$Main$gutter),
+		_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
 		_1: {
 			ctor: '::',
 			_0: _mdgriffith$stylish_elephants$Element$alignTop,
@@ -20789,11 +21650,11 @@ var _jbrgfx$elm_filtered_list$Main$overViewDesc = A2(
 			_1: {ctor: '[]'}
 		}
 	});
-var _jbrgfx$elm_filtered_list$Main$theAppDesc = A2(
+var _jbrgfx$responsive_filtered_list$View$theAppDesc = A2(
 	_mdgriffith$stylish_elephants$Element$paragraph,
 	{
 		ctor: '::',
-		_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$elm_filtered_list$Main$gutter),
+		_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
 		_1: {
 			ctor: '::',
 			_0: _mdgriffith$stylish_elephants$Element$alignTop,
@@ -20854,51 +21715,13 @@ var _jbrgfx$elm_filtered_list$Main$theAppDesc = A2(
 				},
 				{
 					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element$text(' earch for stylish-elephants demos on jbrgfx.github.io.'),
+					_0: _mdgriffith$stylish_elephants$Element$text(' earch for stylish-elephants experimental projects by jbrgfx on github.'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
 		}
 	});
-var _jbrgfx$elm_filtered_list$Main$githubSearchQuery = A2(
-	_mdgriffith$stylish_elephants$Element$row,
-	{
-		ctor: '::',
-		_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
-		_1: {
-			ctor: '::',
-			_0: _jbrgfx$elm_filtered_list$Main$paddingTop(20),
-			_1: {ctor: '[]'}
-		}
-	},
-	{
-		ctor: '::',
-		_0: A2(
-			_mdgriffith$stylish_elephants$Element$newTabLink,
-			{
-				ctor: '::',
-				_0: _mdgriffith$stylish_elephants$Element_Font$bold,
-				_1: {
-					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
-					_1: {
-						ctor: '::',
-						_0: _mdgriffith$stylish_elephants$Element_Font$underline,
-						_1: {
-							ctor: '::',
-							_0: _mdgriffith$stylish_elephants$Element$alignBottom,
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			},
-			{
-				url: 'https://github.com/search?l=&q=mdgriffith%2Fstylish-elephants+extension%3Ajson+path%3A%2F&ref=advsearch&type=Code&utf8=%E2%9C%93',
-				label: _mdgriffith$stylish_elephants$Element$text('All github projects using stylish-elephants')
-			}),
-		_1: {ctor: '[]'}
-	});
-var _jbrgfx$elm_filtered_list$Main$elmlogo = A2(
+var _jbrgfx$responsive_filtered_list$View$elmlogo = A2(
 	_mdgriffith$stylish_elephants$Element$row,
 	{ctor: '[]'},
 	{
@@ -20923,7 +21746,7 @@ var _jbrgfx$elm_filtered_list$Main$elmlogo = A2(
 			{description: 'the Elm Language logo', src: 'elm_logo.png'}),
 		_1: {ctor: '[]'}
 	});
-var _jbrgfx$elm_filtered_list$Main$headerArea = A2(
+var _jbrgfx$responsive_filtered_list$View$phoneHeaderArea = A2(
 	_mdgriffith$stylish_elephants$Element$row,
 	{
 		ctor: '::',
@@ -20933,7 +21756,7 @@ var _jbrgfx$elm_filtered_list$Main$headerArea = A2(
 			_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
 			_1: {
 				ctor: '::',
-				_0: _jbrgfx$elm_filtered_list$Main$borderBottom(1),
+				_0: _jbrgfx$responsive_filtered_list$View$borderBottom(1),
 				_1: {
 					ctor: '::',
 					_0: _mdgriffith$stylish_elephants$Element_Border$color(_elm_lang$core$Color$darkBlue),
@@ -20944,118 +21767,246 @@ var _jbrgfx$elm_filtered_list$Main$headerArea = A2(
 	},
 	{
 		ctor: '::',
-		_0: _jbrgfx$elm_filtered_list$Main$elmlogo,
+		_0: A2(
+			_mdgriffith$stylish_elephants$Element$el,
+			{
+				ctor: '::',
+				_0: _mdgriffith$stylish_elephants$Element$centerY,
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$stylish_elephants$Element_Font$size(18),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$stylish_elephants$Element_Font$bold,
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			_mdgriffith$stylish_elephants$Element$text('phone view')),
+		_1: {ctor: '[]'}
+	});
+var _jbrgfx$responsive_filtered_list$View$headerArea = A2(
+	_mdgriffith$stylish_elephants$Element$row,
+	{
+		ctor: '::',
+		_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
+		_1: {
+			ctor: '::',
+			_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
+			_1: {
+				ctor: '::',
+				_0: _jbrgfx$responsive_filtered_list$View$borderBottom(1),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$stylish_elephants$Element_Border$color(_elm_lang$core$Color$darkBlue),
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	},
+	{
+		ctor: '::',
+		_0: _jbrgfx$responsive_filtered_list$View$elmlogo,
 		_1: {
 			ctor: '::',
 			_0: A2(
-				_mdgriffith$stylish_elephants$Element$newTabLink,
+				_mdgriffith$stylish_elephants$Element$el,
 				{
 					ctor: '::',
-					_0: _mdgriffith$stylish_elephants$Element_Font$bold,
+					_0: _mdgriffith$stylish_elephants$Element$centerY,
 					_1: {
 						ctor: '::',
 						_0: _mdgriffith$stylish_elephants$Element_Font$size(40),
 						_1: {
 							ctor: '::',
-							_0: _mdgriffith$stylish_elephants$Element_Font$underline,
-							_1: {
-								ctor: '::',
-								_0: _mdgriffith$stylish_elephants$Element$alignBottom,
-								_1: {ctor: '[]'}
-							}
+							_0: _mdgriffith$stylish_elephants$Element_Font$bold,
+							_1: {ctor: '[]'}
 						}
 					}
 				},
-				{
-					url: 'https://github.com/jbrgfx',
-					label: _mdgriffith$stylish_elephants$Element$text('jbrgfx github projects')
-				}),
+				_mdgriffith$stylish_elephants$Element$text('desktop view')),
 			_1: {ctor: '[]'}
 		}
 	});
-var _jbrgfx$elm_filtered_list$Main$update = F2(
-	function (msg, model) {
-		var _p2 = msg;
-		var _p3 = _p2._0;
-		return _elm_lang$core$Native_Utils.update(
-			model,
-			{
-				filtered: A2(
-					_elm_lang$core$List$filter,
-					_elm_lang$core$String$contains(_p3),
-					model.people),
-				filterTerm: _p3
-			});
-	});
-var _jbrgfx$elm_filtered_list$Main$initialModel = {
-	people: {
-		ctor: '::',
-		_0: 'elm-filtered-list',
-		_1: {
+var _jbrgfx$responsive_filtered_list$View$pageArea = function (model) {
+	return _elm_lang$core$Native_Utils.eq(model.screenSize, _jbrgfx$responsive_filtered_list$Model$Phone) ? A2(
+		_mdgriffith$stylish_elephants$Element$column,
+		{
 			ctor: '::',
-			_0: 'elm-style-elements-experiments',
+			_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
 			_1: {
 				ctor: '::',
-				_0: 'github-stylish-elephants-search',
+				_0: _jbrgfx$responsive_filtered_list$View$paddingLeft(_jbrgfx$responsive_filtered_list$View$gutter),
 				_1: {
 					ctor: '::',
-					_0: 'responsive-filtered-list',
+					_0: _mdgriffith$stylish_elephants$Element_Font$family(
+						{
+							ctor: '::',
+							_0: _mdgriffith$stylish_elephants$Element_Font$typeface('Open Sans'),
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$stylish_elephants$Element_Font$sansSerif,
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: _jbrgfx$responsive_filtered_list$View$phoneHeaderArea,
+			_1: {
+				ctor: '::',
+				_0: _jbrgfx$responsive_filtered_list$View$theAppDesc,
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_mdgriffith$stylish_elephants$Element$row,
+						{
+							ctor: '::',
+							_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _jbrgfx$responsive_filtered_list$View$inputForm,
+							_1: {ctor: '[]'}
+						}),
 					_1: {
 						ctor: '::',
-						_0: 'responsive-stylish-elephants',
-						_1: {ctor: '[]'}
+						_0: _jbrgfx$responsive_filtered_list$View$validateFilter(model),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_mdgriffith$stylish_elephants$Element$paragraph,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _mdgriffith$stylish_elephants$Element$text('Results:'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_mdgriffith$stylish_elephants$Element$paragraph,
+									{
+										ctor: '::',
+										_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
+										_1: {
+											ctor: '::',
+											_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$lightGrey),
+											_1: {
+												ctor: '::',
+												_0: _mdgriffith$stylish_elephants$Element_Font$size(16),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									A2(_elm_lang$core$List$map, _jbrgfx$responsive_filtered_list$View$viewGithubProjects, model.filtered)),
+								_1: {
+									ctor: '::',
+									_0: _jbrgfx$responsive_filtered_list$View$overViewDesc,
+									_1: {
+										ctor: '::',
+										_0: _jbrgfx$responsive_filtered_list$View$footerArea,
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
-		}
-	},
-	filtered: {
-		ctor: '::',
-		_0: 'elm-filtered-list',
-		_1: {
+		}) : A2(
+		_mdgriffith$stylish_elephants$Element$column,
+		{ctor: '[]'},
+		{
 			ctor: '::',
-			_0: 'elm-style-elements-experiments',
+			_0: _jbrgfx$responsive_filtered_list$View$headerArea,
 			_1: {
 				ctor: '::',
-				_0: 'github-stylish-elephants-search',
+				_0: _jbrgfx$responsive_filtered_list$View$mainColumns(
+					{
+						left: {
+							ctor: '::',
+							_0: A2(
+								_mdgriffith$stylish_elephants$Element$row,
+								{
+									ctor: '::',
+									_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _jbrgfx$responsive_filtered_list$View$inputForm,
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: _jbrgfx$responsive_filtered_list$View$validateFilter(model),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_mdgriffith$stylish_elephants$Element$paragraph,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _mdgriffith$stylish_elephants$Element$text('Results:'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_mdgriffith$stylish_elephants$Element$paragraph,
+											{
+												ctor: '::',
+												_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
+												_1: {
+													ctor: '::',
+													_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$lightGrey),
+													_1: {
+														ctor: '::',
+														_0: _mdgriffith$stylish_elephants$Element_Font$size(16),
+														_1: {ctor: '[]'}
+													}
+												}
+											},
+											A2(_elm_lang$core$List$map, _jbrgfx$responsive_filtered_list$View$viewGithubProjects, model.filtered)),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						},
+						right: {
+							ctor: '::',
+							_0: _jbrgfx$responsive_filtered_list$View$theAppDesc,
+							_1: {
+								ctor: '::',
+								_0: _jbrgfx$responsive_filtered_list$View$overViewDesc,
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
 				_1: {
 					ctor: '::',
-					_0: 'responsive-filtered-list',
-					_1: {
-						ctor: '::',
-						_0: 'responsive-stylish-elephants',
-						_1: {ctor: '[]'}
-					}
+					_0: _jbrgfx$responsive_filtered_list$View$footerArea,
+					_1: {ctor: '[]'}
 				}
 			}
-		}
-	},
-	filterTerm: 'e'
+		});
 };
-var _jbrgfx$elm_filtered_list$Main$Model = F3(
-	function (a, b, c) {
-		return {people: a, filtered: b, filterTerm: c};
-	});
-var _jbrgfx$elm_filtered_list$Main$Filter = function (a) {
-	return {ctor: 'Filter', _0: a};
+var _jbrgfx$responsive_filtered_list$View$wrapper = function (model) {
+	return A2(
+		_mdgriffith$stylish_elephants$Element$column,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _jbrgfx$responsive_filtered_list$View$pageArea(model),
+			_1: {ctor: '[]'}
+		});
 };
-var _jbrgfx$elm_filtered_list$Main$inputForm = A2(
-	_mdgriffith$stylish_elephants$Element_Input$text,
-	{
-		ctor: '::',
-		_0: _mdgriffith$stylish_elephants$Element_Border$color(_elm_lang$core$Color$black),
-		_1: {ctor: '[]'}
-	},
-	{
-		label: A2(
-			_mdgriffith$stylish_elephants$Element_Input$labelLeft,
-			{ctor: '[]'},
-			_mdgriffith$stylish_elephants$Element$text('Filter:')),
-		onChange: _elm_lang$core$Maybe$Just(_jbrgfx$elm_filtered_list$Main$Filter),
-		placeholder: _elm_lang$core$Maybe$Nothing,
-		text: _jbrgfx$elm_filtered_list$Main$initialModel.filterTerm
-	});
-var _jbrgfx$elm_filtered_list$Main$view = function (model) {
+var _jbrgfx$responsive_filtered_list$View$view = function (model) {
 	return A2(
 		_mdgriffith$stylish_elephants$Element$layout,
 		{
@@ -21063,117 +22014,50 @@ var _jbrgfx$elm_filtered_list$Main$view = function (model) {
 			_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
 			_1: {
 				ctor: '::',
-				_0: _mdgriffith$stylish_elephants$Element$width(
-					_mdgriffith$stylish_elephants$Element$px(900)),
+				_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$responsive_filtered_list$View$gutter),
 				_1: {
 					ctor: '::',
-					_0: _jbrgfx$elm_filtered_list$Main$paddingLeft(_jbrgfx$elm_filtered_list$Main$gutter),
-					_1: {
-						ctor: '::',
-						_0: _mdgriffith$stylish_elephants$Element_Font$family(
-							{
-								ctor: '::',
-								_0: _mdgriffith$stylish_elephants$Element_Font$typeface('Open Sans'),
-								_1: {
-									ctor: '::',
-									_0: _mdgriffith$stylish_elephants$Element_Font$sansSerif,
-									_1: {ctor: '[]'}
-								}
-							}),
-						_1: {ctor: '[]'}
-					}
+					_0: _mdgriffith$stylish_elephants$Element$spacing(_jbrgfx$responsive_filtered_list$View$gutter),
+					_1: {ctor: '[]'}
 				}
 			}
 		},
-		A2(
-			_mdgriffith$stylish_elephants$Element$column,
-			{ctor: '[]'},
-			{
-				ctor: '::',
-				_0: _jbrgfx$elm_filtered_list$Main$headerArea,
-				_1: {
-					ctor: '::',
-					_0: _jbrgfx$elm_filtered_list$Main$mainColumns(
-						{
-							left: {
-								ctor: '::',
-								_0: A2(
-									_mdgriffith$stylish_elephants$Element$row,
-									{
-										ctor: '::',
-										_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$elm_filtered_list$Main$gutter),
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: _jbrgfx$elm_filtered_list$Main$inputForm,
-										_1: {ctor: '[]'}
-									}),
-								_1: {
-									ctor: '::',
-									_0: _jbrgfx$elm_filtered_list$Main$validateFilter(model),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_mdgriffith$stylish_elephants$Element$paragraph,
-											{ctor: '[]'},
-											{
-												ctor: '::',
-												_0: _mdgriffith$stylish_elephants$Element$text('Results:'),
-												_1: {ctor: '[]'}
-											}),
-										_1: {
-											ctor: '::',
-											_0: A2(
-												_mdgriffith$stylish_elephants$Element$paragraph,
-												{
-													ctor: '::',
-													_0: _mdgriffith$stylish_elephants$Element$padding(_jbrgfx$elm_filtered_list$Main$gutter),
-													_1: {
-														ctor: '::',
-														_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$lightGrey),
-														_1: {
-															ctor: '::',
-															_0: _mdgriffith$stylish_elephants$Element_Font$size(16),
-															_1: {ctor: '[]'}
-														}
-													}
-												},
-												A2(_elm_lang$core$List$map, _jbrgfx$elm_filtered_list$Main$viewPeople, model.filtered)),
-											_1: {ctor: '[]'}
-										}
-									}
-								}
-							},
-							right: {
-								ctor: '::',
-								_0: _jbrgfx$elm_filtered_list$Main$theAppDesc,
-								_1: {
-									ctor: '::',
-									_0: _jbrgfx$elm_filtered_list$Main$overViewDesc,
-									_1: {
-										ctor: '::',
-										_0: _jbrgfx$elm_filtered_list$Main$githubSearchQuery,
-										_1: {ctor: '[]'}
-									}
-								}
-							}
-						}),
-					_1: {
-						ctor: '::',
-						_0: _jbrgfx$elm_filtered_list$Main$footerArea,
-						_1: {ctor: '[]'}
-					}
-				}
-			}));
+		_jbrgfx$responsive_filtered_list$View$wrapper(model));
 };
-var _jbrgfx$elm_filtered_list$Main$main = _elm_lang$html$Html$beginnerProgram(
-	{model: _jbrgfx$elm_filtered_list$Main$initialModel, view: _jbrgfx$elm_filtered_list$Main$view, update: _jbrgfx$elm_filtered_list$Main$update})();
+var _jbrgfx$responsive_filtered_list$View$blockAttributes = function (screenSize) {
+	var _p2 = screenSize;
+	switch (_p2.ctor) {
+		case 'Phone':
+			return {
+				ctor: '::',
+				_0: _mdgriffith$stylish_elephants$Element$width(
+					_mdgriffith$stylish_elephants$Element$px(800)),
+				_1: {ctor: '[]'}
+			};
+		case 'Tablet':
+			return {
+				ctor: '::',
+				_0: _mdgriffith$stylish_elephants$Element$width(
+					_mdgriffith$stylish_elephants$Element$px(1000)),
+				_1: {ctor: '[]'}
+			};
+		default:
+			return {
+				ctor: '::',
+				_0: _mdgriffith$stylish_elephants$Element$width(
+					_mdgriffith$stylish_elephants$Element$px(1200)),
+				_1: {ctor: '[]'}
+			};
+	}
+};
+
+var _jbrgfx$responsive_filtered_list$Main$main = _elm_lang$html$Html$program(
+	{init: _jbrgfx$responsive_filtered_list$Initialize$init, view: _jbrgfx$responsive_filtered_list$View$view, update: _jbrgfx$responsive_filtered_list$Update$update, subscriptions: _jbrgfx$responsive_filtered_list$Subscriptions$subscriptions})();
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
-if (typeof _jbrgfx$elm_filtered_list$Main$main !== 'undefined') {
-    _jbrgfx$elm_filtered_list$Main$main(Elm['Main'], 'Main', undefined);
+if (typeof _jbrgfx$responsive_filtered_list$Main$main !== 'undefined') {
+    _jbrgfx$responsive_filtered_list$Main$main(Elm['Main'], 'Main', undefined);
 }
 
 if (typeof define === "function" && define['amd'])
