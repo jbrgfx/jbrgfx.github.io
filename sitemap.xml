@@ -8,8 +8,11 @@
 
 
   <url>
+    <loc>https://github.com/jbrgfx</loc>
+    <lastmod>2018-04-17T09:22:46+00:00</lastmod>
+  <url>
     <loc>https://jbrgfx.github.io/</loc>
-    <lastmod>2018-04-12T16:05:46+00:00</lastmod>
+    <lastmod>2018-04-16T06:35:46+00:00</lastmod>
   </url>
   <url>
     <loc>https://jbrgfx.github.io/elm-filtered-list/</loc>
@@ -30,6 +33,10 @@
   <url>
     <loc>https://jbrgfx.github.io/responsive-stylish-elephants/</loc>
     <lastmod>2018-04-12T16:05:46+00:00</lastmod>
+  </url>
+  <url>
+    <loc>http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/latest/</loc>
+     <lastmod>2018-04-12T16:05:46+00:00</lastmod>
   </url>
 
 
