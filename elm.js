@@ -20894,7 +20894,7 @@ var _jbrgfx$elm_filtered_list$Main$githubSearchQuery = A2(
 			},
 			{
 				url: 'https://github.com/search?l=&q=mdgriffith%2Fstylish-elephants+extension%3Ajson+path%3A%2F&ref=advsearch&type=Code&utf8=%E2%9C%93',
-				label: _mdgriffith$stylish_elephants$Element$text('All github projects using stylish-elephants')
+				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants repos (login to github to see the results)')
 			}),
 		_1: {ctor: '[]'}
 	});
