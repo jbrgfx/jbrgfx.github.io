@@ -134,7 +134,7 @@ githubSearchQuery =
             , alignBottom
             ]
             { url = "https://github.com/search?l=&q=mdgriffith%2Fstylish-elephants+extension%3Ajson+path%3A%2F&ref=advsearch&type=Code&utf8=%E2%9C%93"
-            , label = Element.text "stylish-elephants repos (login to github to see the results)"
+            , label = Element.text "stylish-elephants repos (github login required)"
             }
         ]
 
