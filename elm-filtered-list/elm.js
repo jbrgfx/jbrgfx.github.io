@@ -20783,15 +20783,11 @@ var _jbrgfx$elm_filtered_list$Main$overViewDesc = A2(
 							_0: _mdgriffith$stylish_elephants$Element_Font$size(40),
 							_1: {
 								ctor: '::',
-								_0: _mdgriffith$stylish_elephants$Element_Font$lineHeight(1),
+								_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
 								_1: {
 									ctor: '::',
-									_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
-									_1: {
-										ctor: '::',
-										_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
-										_1: {ctor: '[]'}
-									}
+									_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
+									_1: {ctor: '[]'}
 								}
 							}
 						}
