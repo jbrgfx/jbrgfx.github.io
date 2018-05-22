@@ -21423,8 +21423,8 @@ var _jbrgfx$responsive_filtered_list$View$footerArea = A2(
 				}
 			},
 			{
-				url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/4.0.0',
-				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants 4.0.0: package docs')
+				url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/latest/',
+				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants latest package docs')
 			}),
 		_1: {
 			ctor: '::',
