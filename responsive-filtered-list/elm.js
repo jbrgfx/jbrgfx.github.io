@@ -21608,15 +21608,11 @@ var _jbrgfx$responsive_filtered_list$View$overViewDesc = A2(
 							_0: _mdgriffith$stylish_elephants$Element_Font$size(40),
 							_1: {
 								ctor: '::',
-								_0: _mdgriffith$stylish_elephants$Element_Font$lineHeight(0.5),
+								_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
 								_1: {
 									ctor: '::',
-									_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
-									_1: {
-										ctor: '::',
-										_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
-										_1: {ctor: '[]'}
-									}
+									_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
+									_1: {ctor: '[]'}
 								}
 							}
 						}
@@ -21679,15 +21675,11 @@ var _jbrgfx$responsive_filtered_list$View$theAppDesc = A2(
 							_0: _mdgriffith$stylish_elephants$Element_Font$size(40),
 							_1: {
 								ctor: '::',
-								_0: _mdgriffith$stylish_elephants$Element_Font$lineHeight(0.5),
+								_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
 								_1: {
 									ctor: '::',
-									_0: _mdgriffith$stylish_elephants$Element_Font$color(_elm_lang$core$Color$darkBlue),
-									_1: {
-										ctor: '::',
-										_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
-										_1: {ctor: '[]'}
-									}
+									_0: _mdgriffith$stylish_elephants$Element_Background$color(_elm_lang$core$Color$white),
+									_1: {ctor: '[]'}
 								}
 							}
 						}
