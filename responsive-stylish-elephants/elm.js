@@ -17536,7 +17536,7 @@ var _jbrgfx$responsive_stylish_elephants$View$aboutExperiment = A2(
 	},
 	{
 		ctor: '::',
-		_0: _mdgriffith$stylish_elephants$Element$text('This refactoring of https://github.com/billperegoy/elm-page-layout is an experiment in converting a style-elements 4.2.1. project into one that uses the stylish-elephants 4.0.0 (the next version of style-elements). Thanks to lucamug for adding an example of alterate row colors using indexedTable in his source: https://github.com/lucamug/elm-spa-boilerplate/blob/master/src/Pages/Examples.elm#L314,L319.'),
+		_0: _mdgriffith$stylish_elephants$Element$text('This refactoring of https://github.com/billperegoy/elm-page-layout is an experiment in converting a style-elements 4.2.1. project into one that uses the stylish-elephants 6.0.2 (the next version of style-elements). Thanks to lucamug for adding an example of alterate row colors using indexedTable in his source: https://github.com/lucamug/elm-spa-boilerplate/blob/master/src/Pages/Examples.elm#L314,L319.'),
 		_1: {ctor: '[]'}
 	});
 var _jbrgfx$responsive_stylish_elephants$View$attrC = {
@@ -18073,8 +18073,8 @@ var _jbrgfx$responsive_stylish_elephants$View$headerArea = A2(
 				}
 			},
 			{
-				url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/4.0.0',
-				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants 4.0.0: package docs')
+				url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/latest',
+				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants latest: package docs')
 			}),
 		_1: {ctor: '[]'}
 	});
@@ -18127,8 +18127,8 @@ var _jbrgfx$responsive_stylish_elephants$View$pageArea = function (model) {
 													_1: {ctor: '[]'}
 												},
 												{
-													url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/4.0.0',
-													label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants 4.0.0: package docs')
+													url: 'http://package.elm-lang.org/packages/mdgriffith/stylish-elephants/latest',
+													label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants latest: package docs')
 												}),
 											_1: {ctor: '[]'}
 										}),
