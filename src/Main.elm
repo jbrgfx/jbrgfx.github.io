@@ -133,7 +133,7 @@ githubSearchQuery =
             , Font.underline
             , alignBottom
             ]
-            { url = "https://github.com/search?l=&q=stylish-elephants+extension%3Ajson+path%3A%2F&ref=advsearch&type=Code&utf8=%E2%9C%93"
+            { url = "https://github.com/search?l=&q=stylish-elephants+extension%3Ajson+path%3A%2F&type=Code"
             , label = Element.text "stylish-elephants repos (github login required)"
             }
         ]

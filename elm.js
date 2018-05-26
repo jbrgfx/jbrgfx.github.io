@@ -20893,7 +20893,7 @@ var _jbrgfx$elm_filtered_list$Main$githubSearchQuery = A2(
 				}
 			},
 			{
-				url: 'https://github.com/search?l=&q=stylish-elephants+extension%3Ajson+path%3A%2F&ref=advsearch&type=Code&utf8=%E2%9C%93',
+				url: 'https://github.com/search?l=&q=stylish-elephants+extension%3Ajson+path%3A%2F&type=Code',
 				label: _mdgriffith$stylish_elephants$Element$text('stylish-elephants repos (github login required)')
 			}),
 		_1: {ctor: '[]'}
