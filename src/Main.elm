@@ -15,7 +15,7 @@ main =
 
 
 type alias Model =
-    { people : List String
+    { examples : List String
     , filtered : List String
     , filterTerm : String
     }
@@ -23,7 +23,7 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-    { people = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
+    { examples = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
     , filtered = [ "elm-filtered-list", "elm-style-elements-experiments", "github-stylish-elephants-search", "responsive-filtered-list", "responsive-stylish-elephants" ]
     , filterTerm = "e"
     }
@@ -42,7 +42,7 @@ update msg model =
     case msg of
         Filter filterTerm ->
             { model
-                | filtered = List.filter (String.contains filterTerm) model.people
+                | filtered = List.filter (String.contains filterTerm) model.examples
                 , filterTerm = filterTerm
             }
 
@@ -77,7 +77,7 @@ view model =
                         , Background.color lightGrey
                         , Font.size 16
                         ]
-                        (List.map viewPeople model.filtered)
+                        (List.map viewExamples model.filtered)
                     ]
                 , right =
                     [ theAppDesc
@@ -187,7 +187,7 @@ overViewDesc =
         ]
 
 
-viewPeople entry =
+viewExamples entry =
     paragraph
         []
         [ newTabLink

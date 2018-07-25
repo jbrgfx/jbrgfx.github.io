@@ -20665,7 +20665,7 @@ var _jbrgfx$elm_filtered_list$Main$validateFilter = function (model) {
 			_1: {ctor: '[]'}
 		});
 };
-var _jbrgfx$elm_filtered_list$Main$viewPeople = function (entry) {
+var _jbrgfx$elm_filtered_list$Main$viewExamples = function (entry) {
 	return A2(
 		_mdgriffith$stylish_elephants$Element$paragraph,
 		{ctor: '[]'},
@@ -20983,12 +20983,12 @@ var _jbrgfx$elm_filtered_list$Main$update = F2(
 				filtered: A2(
 					_elm_lang$core$List$filter,
 					_elm_lang$core$String$contains(_p3),
-					model.people),
+					model.examples),
 				filterTerm: _p3
 			});
 	});
 var _jbrgfx$elm_filtered_list$Main$initialModel = {
-	people: {
+	examples: {
 		ctor: '::',
 		_0: 'elm-filtered-list',
 		_1: {
@@ -21034,7 +21034,7 @@ var _jbrgfx$elm_filtered_list$Main$initialModel = {
 };
 var _jbrgfx$elm_filtered_list$Main$Model = F3(
 	function (a, b, c) {
-		return {people: a, filtered: b, filterTerm: c};
+		return {examples: a, filtered: b, filterTerm: c};
 	});
 var _jbrgfx$elm_filtered_list$Main$Filter = function (a) {
 	return {ctor: 'Filter', _0: a};
@@ -21139,7 +21139,7 @@ var _jbrgfx$elm_filtered_list$Main$view = function (model) {
 														}
 													}
 												},
-												A2(_elm_lang$core$List$map, _jbrgfx$elm_filtered_list$Main$viewPeople, model.filtered)),
+												A2(_elm_lang$core$List$map, _jbrgfx$elm_filtered_list$Main$viewExamples, model.filtered)),
 											_1: {ctor: '[]'}
 										}
 									}
