@@ -133,8 +133,8 @@ githubSearchQuery =
             , Font.underline
             , alignBottom
             ]
-            { url = "https://github.com/search?l=&q=stylish-elephants+extension%3Ajson+path%3A%2F&type=Code"
-            , label = Element.text "stylish-elephants repos (github login required)"
+            { url = "https://github.com/search?l=&q=elm-ui+extension%3Ajson+path%3A%2F&type=Code"
+            , label = Element.text "elm-ui repos (github login required)"
             }
         ]
 
