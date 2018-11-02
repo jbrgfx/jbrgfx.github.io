@@ -1,5 +1,6 @@
 # jbrgfx.github.io
 projects homepage
+includes elm-ui GutHub search query (requires GutHub authN)
 
 ## links to [jbrgfx on github](https://github.com/jbrgfx/)
 Uses a version of elm-filtered-list.
